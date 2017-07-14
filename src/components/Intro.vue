@@ -17,7 +17,7 @@
 
     <input v-model="userInput">
     <p>{{ userInput }}</p>
-    <button @click="mostrarU">Mostrar Usuario</button>
+    <button @click="showUser">Mostrar Usuario</button>
 
     <br><br>
 
@@ -31,7 +31,7 @@
       <component v-bind:is="currentView"></component>
     </transition>
 
-    <Child1 v-bind:text="'Hola componente child1'" :text2="currentView"></Child1>
+    <Child1 v-on:customEvent="fireCustomEvent" v-bind:text="'Hola componente child1'" :text2="currentView"></Child1>
 
   </div>
 
@@ -42,12 +42,28 @@
   import Child1 from './Child1.vue'
   import Child2 from './Child2.vue'
 
+  /* Mixins permiten distribuir funcionalidades(data,methods,hooks,etc) reusables para los componentes */
+  let myMixin = {
+    data () {
+      return {
+        txt: 'Hola Mi mixin'
+      }
+    },
+    methods: {
+      fireCustomEvent (text2) {
+        console.log('fireCustomEvent')
+        console.log(text2)
+      }
+    }
+
+  }
   /*
    * data() permite el envio de datos al <template>
    * txt variable retorna texto
    */
   export default {
     name: 'intro',
+    mixins: [myMixin],
     components: {
       // Incluimos los componentes q importamos, al objeto, para poder utilizarlos
       Child1, Child2
@@ -60,7 +76,7 @@
     },
     data () {
       return {
-        txt: 'Hola Mundo come to Intro.vue',
+        // txt: 'Hola Mundo come to Intro.vue',
         users: [],
         userInput: '',
         components: ['Child1', 'Child2'],
