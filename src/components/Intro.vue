@@ -1,10 +1,11 @@
 <template>
   <div class="intro">
+    <!--
     <h1>Intro component</h1>
     <p>{{ txt | reverse }}</p>
     <p @click="clickIntro(txt)">Pulsa Aqui !!</p>
 
-    <!-- Se utiliza un if para evitar errores cuando carguemos infomacion desde un API -->
+    <!-- Se utiliza un if para evitar errores cuando carguemos infomacion desde un API
     <ul v-if="users.length">
       <li v-for="user in users">
        {{ user.id }} - {{ user.name }}
@@ -26,13 +27,14 @@
         <button @click="changeComponent(component)">Cambiar al componente {{ component }}</button>
       </li>
     </ul>
-    <!-- con el componente transition podemos implementar un efecto de transicion css -->
+    <!-- con el componente transition podemos implementar un efecto de transicion css
     <transition name="fade">
       <component v-bind:is="currentView"></component>
     </transition>
 
     <Child1 v-on:customEvent="fireCustomEvent" v-bind:text="'Hola componente child1'" :text2="currentView"></Child1>
-
+    -->
+    <slots-component></slots-component>
   </div>
 
 </template>
@@ -41,6 +43,7 @@
   // Iportamos los componentes que utilizaremos
   import Child1 from './Child1.vue'
   import Child2 from './Child2.vue'
+  import SlotsComponent from './SlotsComponent.vue'
 
   /* Mixins permiten distribuir funcionalidades(data,methods,hooks,etc) reusables para los componentes */
   let myMixin = {
@@ -66,7 +69,7 @@
     mixins: [myMixin],
     components: {
       // Incluimos los componentes q importamos, al objeto, para poder utilizarlos
-      Child1, Child2
+      Child1, Child2, SlotsComponent
     },
     /* Se recomienda usar mounted para las peticiones ajax por que en este hook es posible acceder/definir
      * datos de nuestro componente
